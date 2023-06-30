@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import EmissionFactor, EmissionFactorFile
+from .models import EmissionFactor, EmissionFactorFile, ActivityDataFile
 
 
 class EmissionFactorFileAdmin(admin.ModelAdmin):
@@ -18,5 +18,10 @@ class EmissionFactorAdmin(admin.ModelAdmin):
     list_display = ['activity', 'lookup_identifiers', 'co2e', 'active']
 
 
+class ActivityDataFileAdmin(admin.ModelAdmin):
+    list_display = ('file', 'uploaded_at')
+
+
 admin.site.register(EmissionFactor, EmissionFactorAdmin)
 admin.site.register(EmissionFactorFile, EmissionFactorFileAdmin)
+admin.site.register(ActivityDataFile, ActivityDataFileAdmin)

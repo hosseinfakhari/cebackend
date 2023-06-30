@@ -3,8 +3,13 @@ from django.db import models
 from django.core.management import call_command
 
 
+class ActivityDataFile(models.Model):
+    file = models.FileField(upload_to='uploads/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+
 class EmissionFactorFile(models.Model):
-    file = models.FileField()
+    file = models.FileField(upload_to='uploads/')
     update_factors = models.BooleanField(default=True)
 
     def save(self, *args, **kwargs):

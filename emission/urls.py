@@ -2,5 +2,5 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.testapi)
+    path('', views.EmissionCalculatorAPIView.as_view())
 ]
