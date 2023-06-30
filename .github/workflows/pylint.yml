@@ -21,4 +21,4 @@ jobs:
         pipenv install
     - name: Analysing the code with pylint
       run: |
-        pipenv run pylint $(git ls-files '*.py')
+        python -m pipenv run pylint $(git ls-files '*.py')
