@@ -11,9 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-from pathlib import Path
-
 import mimetypes
+from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 mimetypes.add_type("text/javascript", ".js", True)
 
