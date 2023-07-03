@@ -55,6 +55,9 @@ const columns: GridColDef[] = [
 function App() {
     const [activityData, setActivityData] = React.useState<Activity[]>([])
     const [fileSelected, setFileSelected] = React.useState<File>();
+
+    const [filterScope, setFilterScope] = React.useState("")
+    const [filterCategory, setFilterCategory] = React.useState("")
     const handleFileChange = function (e: React.ChangeEvent<HTMLInputElement>) {
         const fileList = e.target.files;
         if (!fileList) return;
@@ -78,10 +81,13 @@ function App() {
     }
 
     const getData = function () {
-        axios.get("api/v1/emission/activity_data/")
+        axios.get("api/v1/emission/activity_data/", {
+            params: {
+                scope: filterScope,
+                category: filterCategory
+            }
+        })
             .then(res => {
-                // @ts-ignore
-                console.log(res.data, 'data')
                 setActivityData(res.data.results)
             })
             .catch(err => console.error(err))
@@ -102,9 +108,12 @@ function App() {
                     <Button variant="contained" onClick={uploadFile}>Upload Activity Data</Button>
                     <hr/>
 
-                    <Input placeholder={"Filter By Scope"} type={"number"}/>
-                    <Input placeholder={"Filter By Category"} type={"number"}/>&nbsp;
-                    <Button variant="contained" onClick={getData}>Get Emission Data</Button>
+                    <Input placeholder={"Filter By Scope"} value={filterScope} onChange={e => {
+                        setFilterScope(e.target.value)
+                    }} type={"number"}   style={{margin:'8px'}}/>
+                    <Input placeholder={"Filter By Category"} value={filterCategory}  style={{margin:'8px'}}
+                           onChange={e => setFilterCategory(e.target.value)} type={"number"}/>&nbsp;
+                    <Button variant="outlined" onClick={getData}  size={"small"}  style={{margin:'8px'}}>Get Emission Data</Button>
                 </header>
 
                 <Box sx={{height: 400, width: '100%'}}>
