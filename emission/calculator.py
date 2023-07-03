@@ -4,7 +4,7 @@ from csv import DictReader
 from django.db.models import Q
 from rest_framework import serializers
 
-from emission.models import EmissionFactor
+from emission.models import EmissionFactor, ActivityData
 
 
 class EmissionCalculator(ABC):
@@ -22,12 +22,10 @@ class ElectricityActivityCalculator(EmissionCalculator):
                                                    Q(lookup_identifiers__contains=row['Country'])).first()
             if factor:
                 co2e = float(row['Electricity Usage']) * factor.co2e
-                emissions.append({
-                    "co2e": co2e,
-                    "scope": factor.scope,
-                    "category": factor.category,
-                    "activity": factor.activity,
-                })
+                activity_data = ActivityData(co2e=co2e, scope=factor.scope, category=factor.category,
+                                             activity=factor.activity)
+                activity_data.save()
+                emissions.append(activity_data)
         return emissions
 
 
@@ -41,12 +39,10 @@ class AirTravelActivityCalculator(EmissionCalculator):
                                                    Q(lookup_identifiers__contains=row['Passenger class'])).first()
             if factor:
                 co2e = float(row['Distance travelled']) * factor.co2e
-                emissions.append({
-                    "co2e": co2e,
-                    "scope": factor.scope,
-                    "category": factor.category,
-                    "activity": factor.activity,
-                })
+                activity_data = ActivityData(co2e=co2e, scope=factor.scope, category=factor.category,
+                                             activity=factor.activity)
+                activity_data.save()
+                emissions.append(activity_data)
         return emissions
 
 
@@ -59,12 +55,10 @@ class PurchasedGoodsActivityCalculator(EmissionCalculator):
                                                    Q(lookup_identifiers__contains=row['Supplier category'])).first()
             if factor:
                 co2e = float(row['Spend']) * factor.co2e
-                emissions.append({
-                    "co2e": co2e,
-                    "scope": factor.scope,
-                    "category": factor.category,
-                    "activity": factor.activity,
-                })
+                activity_data = ActivityData(co2e=co2e, scope=factor.scope, category=factor.category,
+                                             activity=factor.activity)
+                activity_data.save()
+                emissions.append(activity_data)
         return emissions
 
 

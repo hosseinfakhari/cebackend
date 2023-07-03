@@ -21,7 +21,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('api/v1/emission', include('emission.urls')),
+    path('api/v1/emission/', include('emission.urls')),
     path('admin/', admin.site.urls),
     path('', include('frontend.urls')),
 ] + staticfiles_urlpatterns()

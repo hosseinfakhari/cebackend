@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     'corsheaders',
     'rest_framework',
+    'django_filters',
 
     'emission.apps.EmissionsConfig',
     'frontend.apps.FrontendConfig',
@@ -121,6 +122,11 @@ AUTH_PASSWORD_VALIDATORS = [
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

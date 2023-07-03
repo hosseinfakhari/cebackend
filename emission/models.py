@@ -19,7 +19,7 @@ class EmissionFactorFile(models.Model):
 
 
 class EmissionFactor(models.Model):
-    activity = models.CharField(max_length=255)
+    activity = models.CharField(max_length=255, db_index=True)
     lookup_identifiers = models.CharField(max_length=512)
     unit = models.CharField(max_length=50)
     co2e = models.FloatField()
@@ -29,3 +29,10 @@ class EmissionFactor(models.Model):
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+
+class ActivityData(models.Model):
+    activity = models.CharField(max_length=255, db_index=True)
+    co2e = models.FloatField()
+    scope = models.IntegerField(null=True)
+    category = models.IntegerField(null=True)

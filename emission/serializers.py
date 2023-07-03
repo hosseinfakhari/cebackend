@@ -1,7 +1,7 @@
 import csv
 
 from rest_framework import serializers
-from .models import ActivityDataFile
+from .models import ActivityDataFile, ActivityData
 
 
 class ActivityDateFileSerializer(serializers.ModelSerializer):
@@ -15,3 +15,10 @@ class ActivityDateFileSerializer(serializers.ModelSerializer):
         except Exception as e:
             raise serializers.ValidationError('Invalid CSV file: %s' % e)
         return value
+
+
+class ActivityDataSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ActivityData
+        fields = ('id', 'activity', 'co2e', 'scope', 'category')
